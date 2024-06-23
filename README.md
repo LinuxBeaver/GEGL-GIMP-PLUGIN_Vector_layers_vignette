@@ -9,6 +9,12 @@ https://github.com/LinuxBeaver/GEGL-SSG-Stroke-Shadow-Glow-/
 
 ![image](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/assets/78667207/52676d65-8f4d-48e3-9d9c-186b7af94813)
 
+# Limitations this plugin has (for now)
+
+Future updates plan to fix this but right now this plugin has two limitations
+
+1. It will render an oval on non 16:9 canvases. Though one can manually fix this using shape squeeze slider. This seems impossible to fix but I will investigate soon
+2. It replaces everything on canvas because it uses the replace blend mode. Once I get around to it I will instruct the plugin to use the normal blend mode instead..
 
 ## OS specific location to put GEGL Filter binaries 
 
@@ -56,9 +62,13 @@ ninja -C build
 
 ![image](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/assets/78667207/3904d200-1bf8-415a-963e-8aa5f4fba571)
 
+![image](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/assets/78667207/7899e55b-497d-464b-a1e7-db04d64071d3)
+
+
 
 ## Enjoy
 and remember if you like this plugin make sure to check out my main layer effects engine and more here. I will always be your SaintGEGL
 
 https://github.com/LinuxBeaver/GEGL-Effects---Layer-Effects-in-Gimp-using-GEGL/releases
+
 https://github.com/LinuxBeaver?tab=repositories

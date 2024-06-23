@@ -1,4 +1,5 @@
 Download binaries here. (FOLLOW INSTRUCTIONS)
+
 [https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/releases](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/releases)
 
 # Vector layers in GIMP rendered by GEGL via exploiting vignette
@@ -57,3 +58,7 @@ ninja -C build
 
 
 ## Enjoy
+and remember if you like this plugin make sure to check out my main layer effects engine and more here. I will always be your SaintGEGL
+
+https://github.com/LinuxBeaver/GEGL-Effects---Layer-Effects-in-Gimp-using-GEGL/releases
+https://github.com/LinuxBeaver?tab=repositories

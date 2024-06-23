@@ -1,6 +1,6 @@
 Download binaries here. (FOLLOW INSTRUCTIONS)
 
-[https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/releases](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/releases)
+https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/releases
 
 # Vector layers in GIMP rendered by GEGL via exploiting vignette
 This plugin calls gegl:vignette and my invert transparency and ssg plugin together to render basic squares, circles and more. Cocidentially it ships with plugins "stroke shadow glow" and "invert transparency" as bonus filters. You can learn more about bonus filters here

@@ -1,19 +1,13 @@
 Download binaries here. (FOLLOW INSTRUCTIONS)
-https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/releases
+[https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/releases](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/releases)
 
-# GEGL Glossy Balloon for text styling in Gimp
-![image](https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/assets/78667207/b4ea9d43-cb5d-42fd-86ec-69a2792ac57a)
+# Vector layers in GIMP rendered by GEGL via exploiting vignette
+This plugin calls gegl:vignette and my invert transparency and ssg plugin together to render basic squares, circles and more. Cocidentially it ships with plugins "stroke shadow glow" and "invert transparency" as bonus filters. You can learn more about bonus filters here
 
-![image](https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/assets/78667207/e2f30429-05be-49bd-b057-a44a4834b4eb)
+https://github.com/LinuxBeaver/GEGL-SSG-Stroke-Shadow-Glow-/
 
-A classic Gimp Plugin of mine released in late May 2022 where GEGL makes a gloss coated bump text effect.
-This plugin ships with a bonus filter "threshold alpha 2" that behaves like Gimp's Curves on Alpha Channel. The
-bonus operation is highly recommended but not needed for Glossy Balloon to work. If you download the binaries it 
-will ship with it.
+![image](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/assets/78667207/52676d65-8f4d-48e3-9d9c-186b7af94813)
 
-This plugin looks great with fonts like "DynaPuff" that you can download here.
-https://fonts.google.com/specimen/DynaPuff
-but it will apply on any font and obviously you don't need DynaPuff for it to work.
 
 ## OS specific location to put GEGL Filter binaries 
 
@@ -55,18 +49,11 @@ ninja -C build
 
 ## Extra preview of this based Gimp plugin
 
-![image](https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/assets/78667207/b23303be-edeb-4b4d-9015-0209dab12689)
+![image](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/assets/78667207/7e7c497b-953c-4824-b035-4d73fb87e38b)
 
-![image](https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/assets/78667207/22904bb0-b2ac-4b1c-b727-bd51c182fa58)
+![image](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/assets/78667207/c18535ff-a086-410a-81f4-4b0ce30725e9)
 
-![image](https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/assets/78667207/b3e0f258-09fd-4bc1-8644-2976b939de0c)
-
-![image](https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/assets/78667207/059e40b0-0d72-4731-b901-1d7b0ce17ac8)
-
-
+![image](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/assets/78667207/3904d200-1bf8-415a-963e-8aa5f4fba571)
 
 
 ## Enjoy
-
-![image](https://github.com/LinuxBeaver/GEGL-glossy-balloon-text-styling/assets/78667207/0ab62e35-33bb-4a88-a420-37a3d721e56f)
-

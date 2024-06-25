@@ -47,6 +47,7 @@ property_boolean (outline_normal, _("Apply fill"), FALSE)
 ui_meta ("visible", "guichange {outline, outlinebevel}")
 */
 
+
 property_color (outline_color, _("Outline color"), "#000000")
 ui_meta ("visible", "!mode {ocoutline, ocbevel,  }" )
     description (_("The color to paint over the outline. It defaults to black"))
@@ -67,50 +68,51 @@ enum_end (GeglVignetteShape_bv)
 property_enum (shape, _("Shape to use"),
     GeglVignetteShape_bv, gegl_vignette_shape_bv,
     GEGL_VIGNETTE_SHAPE_CIRCLE)
-
+  ui_meta     ("sensitive", " vignette_switch")
+  ui_meta ("visible", "vignette_switch")
 
 property_double (shape_radius, _("Shape radius"), 0.215) 
     description (_("How far out shape goes as portion of half image diagonal"))
     value_range (0.0, G_MAXDOUBLE)
     ui_range    (0.0, 0.60)
     ui_meta     ("unit", "relative-distance")
-
-
-
+  ui_meta     ("sensitive", " vignette_switch")
+  ui_meta ("visible", "vignette_switch")
 
 property_double (shape_proportion, _("Shape proportion"), 1.0)
     description(_("How close we are to image proportions"))
     value_range (0.0, 1.0)
+  ui_meta     ("sensitive", " vignette_switch")
+  ui_meta ("visible", "vignette_switch")
 
 
-property_double (shape_squeeze, _("Shape Squeeze"), -0.40)
-    description (_("Aspect ratio to use, -0.5 = 1:2, 0.0 = 1:1, 0.5 = 2:1, "
-              "-1.0 = 1:inf 1.0 = inf:1, this is applied after "
-              "proportion is taken into account, to directly use "
-              "squeeze factor as proportions, set proportion to 0.0."))
+property_double (shape_squeeze, _("Shape Squeeze (oval to circle fix)"), -0.40)
+    description (_("On 16:9 canvases it is guaranteed to make a circle but on non 16:9 canvases the user will need to manually adjust things"))
     value_range (-1.0, 1.0)
+  ui_meta     ("sensitive", " vignette_switch")
+  ui_meta ("visible", "vignette_switch")
 
 
 property_double (shape_x, _("Shape center X"), 0.5)
     ui_range    (0, 1.0)
     ui_meta     ("unit", "relative-coordinate")
     ui_meta     ("axis", "x")
-
+  ui_meta     ("sensitive", " vignette_switch")
+  ui_meta ("visible", "vignette_switch")
 
 property_double (shape_y, _("Shape center Y"), 0.5)
     ui_range    (0, 1.0)
     ui_meta     ("unit", "relative-coordinate")
     ui_meta     ("axis", "y")
-
-
+  ui_meta     ("sensitive", " vignette_switch")
+  ui_meta ("visible", "vignette_switch")
 
 property_double (shape_rotation, _("Shape rotation"), 0.0)
     value_range (0.0, 360.0)
     ui_meta     ("unit", "degree") /* XXX: change to radians */
     ui_meta     ("direction", "cw")
-
-
-
+  ui_meta     ("sensitive", " vignette_switch")
+  ui_meta ("visible", "vignette_switch")
 
 enum_start (gegl_stroke_grow_shapeoutlinesb)
   enum_value (GEGL_stroke_GROW_SHAPE_SQUARE2,  "square",  N_("Square"))
@@ -124,6 +126,7 @@ property_enum   (grow_shape, _("Outline's internal median"),
   description   (_("The shape of the border's internal median. This is not the same thing as the shape. Dropshadow has the same option"))
 
 
+
 property_double (stroke, _("Grow radius of outline"), 9.0)
   value_range   (0, 100.0)
   ui_range      (0, 50.0)
@@ -133,14 +136,9 @@ property_double (stroke, _("Grow radius of outline"), 9.0)
   ui_meta       ("unit", "pixel-distance")
   description (_("The distance to expand the outline."))
 
-
-
 property_double (opacity, _("Opacity of outline"), 2)
   value_range   (0.0, 4.0)
   ui_steps      (0.0, 4.0)
-
-
-
 
 
 #else
@@ -164,9 +162,12 @@ typedef struct
  GeglNode *normal;
  GeglNode *input2;
  GeglNode *input3;
+ GeglNode *input0;
  GeglNode *none;
  GeglNode *opacity;
  GeglNode *median;
+ GeglNode *graphs;
+ GeglNode *applyon;
  GeglNode *output;
 }State;
 
@@ -222,6 +223,21 @@ static void attach (GeglOperation *operation)
   state->median = gegl_node_new_child (gegl,
                                   "operation", "gegl:median-blur", "radius", 0,
                                   NULL);
+#define stringtop \
+" id=1 src aux=[  ref=1 distance-transform opacity value=0  ]  "\
+
+  state->graphs = gegl_node_new_child (gegl,
+                                  "operation", "gegl:gegl", "string", stringtop,
+                                  NULL);
+
+  state->applyon = gegl_node_new_child (gegl,
+                                  "operation", "gegl:over",
+                                  NULL);
+  state->input0 = gegl_node_new_child (gegl,
+                                  "operation", "gegl:nop",
+                                  NULL);
+
+
 
   gegl_operation_meta_redirect (operation, "outline_color",   state->outlinedeluxe, "colorssg");
   gegl_operation_meta_redirect (operation, "shape_color",   state->inverttrans, "value");
@@ -233,7 +249,6 @@ static void attach (GeglOperation *operation)
   gegl_operation_meta_redirect (operation, "shape_x",    state->vignette, "x");
   gegl_operation_meta_redirect (operation, "shape_y",    state->vignette, "y");
   gegl_operation_meta_redirect (operation, "shape_rotation",    state->vignette, "rotation");
-
 
   gegl_operation_meta_redirect (operation, "opacity",   state->outlinedeluxe, "opacityssg");
   gegl_operation_meta_redirect (operation, "stroke",   state->outlinedeluxe, "stroke");
@@ -279,7 +294,9 @@ outlinedeluxe = state->nop3;
   if (o->outline_normal)
 */
 
-  gegl_node_link_many (state->input, vignette, state->inverttrans, state->input3, state->input2, state->normal,  erase, state->median, state->output, NULL);
+  gegl_node_link_many (state->input, state->input0, state->applyon,  state->output, NULL);
+  gegl_node_connect (state->applyon, "aux", state->median, "output");
+  gegl_node_link_many (state->input0, state->graphs, vignette, state->inverttrans, state->input3, state->input2, state->normal,  erase, state->median, NULL);
   gegl_node_connect (state->normal, "aux", outlinedeluxe, "output");
   gegl_node_link_many (state->input2, outlinedeluxe, NULL);
   gegl_node_link_many (state->input3, state->opacity, NULL);
@@ -302,6 +319,8 @@ GeglOperationMetaClass *operation_meta_class = GEGL_OPERATION_META_CLASS (klass)
     "title",       _("Draw Shapes"),
     "reference-hash", "gimpcandrawacircle",
     "description", _("Draw circles and squares in GIMP with GEGL. Alternatively there is a mode to hide the internal vignette and use GIMP's built in vignette'"),
+    "gimp:menu-path", "<Image>/Filters/Render/Fun",
+    "gimp:menu-label", _("Render Shapes..."),
     NULL);
 }
 

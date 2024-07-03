@@ -33,7 +33,7 @@ The code for this filter is very simple. Thus a good plugin to study for people 
 #ifdef GEGL_PROPERTIES
 
 #define TUTORIAL \
-" id=1  color-overlay value=#ffffff gimp:layer-mode layer-mode=behind opacity=1.00 aux=[ color value=#000000  ]  id=2 gimp:layer-mode layer-mode=color-erase opacity=1.00 aux=[ color value=#ffffff ] crop "\
+" component-extract component=alpha color-to-alpha color=white transparency-threshold=0.1  opacity-threshold=0.5 "\
 
 
 
@@ -82,7 +82,6 @@ gegl_op_class_init (GeglOpClass *klass)
   gegl_operation_class_set_keys (operation_class,
     "name",        "lb:invert-transparency",
     "title",       _("Invert Transparency"),
-    "categories",  "Technical",
     "reference-hash", "2kc15254a2385110001adc2544142af",
     "description", _("Replace Transparency with color and color with transparency "
                      ""),

@@ -49,7 +49,6 @@ ui_meta ("visible", "guichange {outline, outlinebevel}")
 
 
 property_color (outline_color, _("Outline color"), "#000000")
-ui_meta ("visible", "!mode {ocoutline, ocbevel,  }" )
     description (_("The color to paint over the outline. It defaults to black"))
 
 
@@ -162,12 +161,9 @@ typedef struct
  GeglNode *normal;
  GeglNode *input2;
  GeglNode *input3;
- GeglNode *input0;
  GeglNode *none;
  GeglNode *opacity;
  GeglNode *median;
- GeglNode *graphs;
- GeglNode *applyon;
  GeglNode *output;
 }State;
 
@@ -223,20 +219,6 @@ static void attach (GeglOperation *operation)
   state->median = gegl_node_new_child (gegl,
                                   "operation", "gegl:median-blur", "radius", 0,
                                   NULL);
-#define stringtop \
-" id=1 src aux=[  ref=1 distance-transform opacity value=0  ]  "\
-
-  state->graphs = gegl_node_new_child (gegl,
-                                  "operation", "gegl:gegl", "string", stringtop,
-                                  NULL);
-
-  state->applyon = gegl_node_new_child (gegl,
-                                  "operation", "gegl:over",
-                                  NULL);
-  state->input0 = gegl_node_new_child (gegl,
-                                  "operation", "gegl:nop",
-                                  NULL);
-
 
 
   gegl_operation_meta_redirect (operation, "outline_color",   state->outlinedeluxe, "colorssg");
@@ -294,9 +276,7 @@ outlinedeluxe = state->nop3;
   if (o->outline_normal)
 */
 
-  gegl_node_link_many (state->input, state->input0, state->applyon,  state->output, NULL);
-  gegl_node_connect (state->applyon, "aux", state->median, "output");
-  gegl_node_link_many (state->input0, state->graphs, vignette, state->inverttrans, state->input3, state->input2, state->normal,  erase, state->median, NULL);
+  gegl_node_link_many (state->input, vignette, state->inverttrans, state->input3, state->input2, state->normal,  erase, state->median, state->output, NULL);
   gegl_node_connect (state->normal, "aux", outlinedeluxe, "output");
   gegl_node_link_many (state->input2, outlinedeluxe, NULL);
   gegl_node_link_many (state->input3, state->opacity, NULL);

@@ -3,7 +3,7 @@ Download binaries here. (FOLLOW INSTRUCTIONS)
 https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/releases
 
 # Vector layers in GIMP rendered by GEGL via exploiting vignette
-This plugin calls gegl:vignette and my invert transparency and ssg plugin together to render basic squares, circles and more. Due to this it ships with plugins "stroke shadow glow" and "invert transparency" as bonus filters. You can learn more about bonus filters here
+This plugin calls gegl:vignette and my invert transparency and ssg plugin together to render basic squares, circles, diamonds and vertical and horizontal bars. Due to this it ships with plugins "stroke shadow glow" and "invert transparency" as bonus filter dependencies. You can learn more about bonus filters here
 
 https://github.com/LinuxBeaver/GEGL-SSG-Stroke-Shadow-Glow-/
 

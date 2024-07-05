@@ -3,25 +3,25 @@ Download binaries here. (FOLLOW INSTRUCTIONS)
 https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/releases
 
 # Vector layers in GIMP rendered by GEGL via exploiting vignette
-This plugin calls gegl:vignette and my invert transparency and ssg plugin together to render basic squares, circles and more. Cocidentially it ships with plugins "stroke shadow glow" and "invert transparency" as bonus filters. You can learn more about bonus filters here
+This plugin calls gegl:vignette and my invert transparency and ssg plugin together to render basic squares, circles and more. Due to this it ships with plugins "stroke shadow glow" and "invert transparency" as bonus filters. You can learn more about bonus filters here
 
 https://github.com/LinuxBeaver/GEGL-SSG-Stroke-Shadow-Glow-/
 
 ![image](https://github.com/LinuxBeaver/Vector_Layers_in_GIMP_via_vignette/assets/78667207/52676d65-8f4d-48e3-9d9c-186b7af94813)
 
-# Limitations this plugin has (for now)
+# Limitations this plugin has
 
 Future updates plan to fix this but right now this plugin has two limitations
 
-1. It will render an oval on non 16:9 canvases. Though one can manually fix this using shape squeeze slider. This seems impossible to fix but I will investigate soon
-2. It replaces everything on canvas because it uses the replace blend mode. Once I get around to it I will instruct the plugin to use the normal blend mode instead..
+1. It will render an oval on non 16:9 canvases. Though one can manually fix this using shape squeeze slider. This seems impossible to fix 
+2. It is required to be applied on a blank transparent layer. Its impossible to get it to apply to a layer with content because then the vignette in GIMP 2.99.19 would not work.
 
 ## OS specific location to put GEGL Filter binaries 
 
 **Windows**
 C:\Users\USERNAME\AppData\Local\gegl-0.4\plug-ins
  
-** Linux **
+**Linux**
  /home/(USERNAME)/.local/share/gegl-0.4/plug-ins
  
  **Linux (Flatpak)**
